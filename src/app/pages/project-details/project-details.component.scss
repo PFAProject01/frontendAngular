@@ -1,0 +1,459 @@
+/* From Uiverse.io by aaronross1 */
+.edit-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none !important;
+  margin-right: 10px;
+}
+
+.edit-svgIcon {
+  width: 17px;
+  transition-duration: 0.3s;
+}
+
+.edit-svgIcon path {
+  fill: white;
+}
+
+.edit-button:hover {
+  width: 120px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: rgb(129, 127, 127);
+  align-items: center;
+}
+
+.edit-button:hover .edit-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+.edit-button::before {
+  display: none;
+  content: "Edit";
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.edit-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
+}
+/* From Uiverse.io by aaronross1 */
+.delete-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+}
+
+.delete-svgIcon {
+  width: 15px;
+  transition-duration: 0.3s;
+}
+
+.delete-svgIcon path {
+  fill: white;
+}
+
+.delete-button:hover {
+  width: 90px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: rgb(129, 127, 127);
+  align-items: center;
+}
+
+.delete-button:hover .delete-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+.delete-button::before {
+  display: none;
+  content: "Delete";
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.delete-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
+}
+/* 
+  cardp {
+    width: 885px;
+    height: 650px;
+    border-radius: 15px;
+    display: grid; 
+    grid-template-columns: repeat(7, 1fr); 
+    gap: 10px; 
+    padding: 10px;
+    background-color: #353535; 
+  }*/
+.title {
+  padding: 10px 15px;
+  font-weight: 900;
+  font-size: 1.3em;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+/* From Uiverse.io by arafatrahat94 */
+.cardCollection {
+  max-width: calc(100% - 16px);
+  width: 100%;
+  height: 100%; /* Make cards fit the grid cells */
+  background: #dcdcdc;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  transition: 0.5s ease-in-out;
+  //margin-bottom: 15px;
+  margin-left: 5px;
+  //margin-top: 15px;
+  //margin-right: 15px;
+}
+.cardCollection:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.cardCollectionimg {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  border-radius: 10px;
+  background: linear-gradient(#d7cfcf, #9198e5);
+}
+
+.cardCollection:hover > .cardCollectionimg {
+  transition: 0.5s ease-in-out;
+  background: linear-gradient(#9198e5, #712020);
+}
+
+.cardCollectiontextBox {
+  width: calc(100% - 90px);
+  margin-left: 10px;
+  color: rgb(0, 0, 0);
+  font-family: "Poppins" sans-serif;
+}
+
+.cardCollectiontextContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.span {
+  font-size: 10px;
+}
+
+.cardCollectionh1 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.cardCollectionp {
+  font-size: 12px;
+  font-weight: lighter;
+}
+.cardCollectioncheckbox-container {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+.cardCollectioncustom-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.cardCollectioncheckmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.cardCollectioncheckmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.cardCollectioncustom-checkbox:checked ~ .cardCollectioncheckmark {
+  background-color: #2196f3;
+  box-shadow: 0 3px 7px rgba(33, 150, 243, 0.3);
+}
+
+.cardCollectioncustom-checkbox:checked ~ .cardCollectioncheckmark:after {
+  display: block;
+}
+
+@keyframes checkAnim {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: 10px;
+  }
+}
+
+.cardCollectioncustom-checkbox:checked ~ .cardCollectioncheckmark:after {
+  animation: checkAnim 0.2s forwards;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+  grid-template-rows: repeat(5, auto); /* 5 lignes */
+  gap: 20px; /* Espacement entre les cartes */
+  //justify-content: center; /* Centrer le contenu horizontalement */
+}
+.cardpp .card {
+  margin-bottom: 20px; /* Espacement entre les cartes */
+  border-radius: 15px; /* Arrondi plus prononcé pour un look moderne */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Ombre plus intense pour une profondeur supplémentaire */
+  background-color: #ffffff; /* Arrière-plan blanc pour un contraste clair */
+  transition: transform 0.2s, box-shadow 0.2s ease-in-out; /* Animation au survol */
+  border: none;
+}
+
+.cardpp .card-header {
+  background-color: #343a40; /* Couleur d'en-tête sombre pour contraste */
+  color: white; /* Texte blanc */
+  text-align: center; /* Centre le texte horizontalement */
+  display: flex; /* Utilise flexbox pour centrer */
+  justify-content: center; /* Centre horizontalement */
+  align-items: center; /* Centre verticalement */
+  border-radius: 15px; /* Coins arrondis */
+  font-weight: bold;
+  height: 50px; /* Ajustez la hauteur pour mieux centrer verticalement */
+  margin-top: 0px;
+  padding: 0; /* Enlève tout padding inutile */
+}
+
+.cardpp .card-body {
+  padding: 20px; /* Espace intérieur */
+}
+
+.cardpp .form-group {
+  margin-bottom: 15px; /* Espacement entre les champs de formulaire */
+}
+
+.cardpp .btn-primary {
+  background-color: #007bff; /* Couleur de bouton bleu principal */
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.cardpp .btn-primary:hover {
+  background-color: #0056b3; /* Couleur de survol pour le bouton */
+}
+
+.cardpp .btn-danger {
+  background-color: #dc3545; /* Couleur de bouton rouge */
+  border: none;
+  color: white;
+}
+
+.cardpp .btn-danger:hover {
+  background-color: #c82333; /* Couleur de survol pour le bouton danger */
+}
+
+.cardpp ul {
+  padding-left: 20px;
+  list-style: none;
+  margin: 0;
+}
+
+.cardpp li {
+  margin-bottom: 10px; /* Espacement entre les commentaires */
+}
+
+.cardpp .card-footer {
+  background-color: #f8f9fa; /* Arrière-plan gris clair pour le pied de la carte */
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  text-align: right;
+}
+
+/* From Uiverse.io by Yaya12085 */
+.Btn4 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border-radius: calc(45px / 2);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: 0.3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background: linear-gradient(144deg, #af40ff, #5b42f3 50%, #00ddeb);
+}
+
+/* plus sign */
+.sign {
+  width: 100%;
+  font-size: 2.2em;
+  color: white;
+  transition-duration: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* text */
+.text {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.4em;
+  font-weight: 500;
+  transition-duration: 0.3s;
+}
+/* hover effect on button width */
+.Btn4:hover {
+  width: 125px;
+  transition-duration: 0.3s;
+}
+
+.Btn4:hover .sign {
+  width: 30%;
+  transition-duration: 0.3s;
+  padding-left: 15px;
+}
+/* hover effect button's text */
+.Btn4:hover .text {
+  opacity: 1;
+  width: 70%;
+  transition-duration: 0.3s;
+  padding-right: 15px;
+}
+/* button click effect*/
+.Btn4:active {
+  transform: translate(2px, 2px);
+}
+/* From Uiverse.io by andrew-demchenk0 */
+.buttonC {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 12px;
+  gap: 4px;
+  height: 32px;
+  width: 81px;
+  border: none;
+  background: #000000d0;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.lable {
+  line-height: 22px;
+  font-size: 17px;
+  color: #ffffff;
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}
+
+.buttonC:hover {
+  background: #1b1b1cd0;
+}
+
+.buttonC:hover .svg-icon {
+  animation: rotate 1.3s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(10deg);
+  }
+
+  50% {
+    transform: rotate(0deg);
+  }
+
+  75% {
+    transform: rotate(-10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}

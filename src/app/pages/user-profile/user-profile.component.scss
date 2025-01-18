@@ -1,0 +1,51 @@
+input[type="submit"] {
+    background-color: blue;  /* Couleur de fond bleue */
+    color: white;            /* Texte en blanc */
+    border: none;            /* Supprime les bordures */
+    padding: 10px 20px;      /* Ajoute des marges internes */
+    font-size: 16px;         /* Taille de police */
+    cursor: pointer;         /* Curseur pointeur */
+    border-radius: 5px; 
+       
+}
+input[type="submit"]:hover {
+    background-color: darkblue; /* Couleur plus foncée au survol */
+}
+.button-container {
+    text-align: right; /* Aligne le bouton à droite */
+}
+
+
+.profile-card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 400px; /* Augmente la largeur */
+}
+.avatar {
+    width: 250px;
+    height: 180px;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 5px solid #ffffff; /* Ajoute un contour pour l'avatar */
+  }
+  .user-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .user-details h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+  }
+  .user-details p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .user-details p strong {
+    color:#444;
+}

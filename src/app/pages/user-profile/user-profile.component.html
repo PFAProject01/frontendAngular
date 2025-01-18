@@ -1,0 +1,253 @@
+<div class="header pb-8 pt-5 pt-md-8" style="background-image: url('https://cdn.pixabay.com/photo/2017/06/04/20/48/implement-2372179_1280.jpg'); background-size: cover; background-position: center;">
+
+  <!-- Mask -->
+  <span class="mask bg-gradient-primary opacity-4"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-7 col-md-10"></div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="justify-content-center">
+          <Col class="order-lg-2" lg="3" />
+          <div class="card-profile-image">
+            <a>
+              <img
+                [src]="userIn.image || 'default-avatar.png'"
+                alt="Photo de profil"
+                class="avatar"
+                (click)="openPhotoModal()"
+              />
+            </a>
+            <div
+          class="modal fade"
+          [class.show]="isPhotoModalOpen"
+          [style.display]="isPhotoModalOpen ? 'block' : 'none'"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Update Profile Photo</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  aria-label="Close"
+                  (click)="closePhotoModal()"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form (submit)="updatePhoto($event)">
+                  <div class="form-group">
+                    <label for="newPhoto">Select new photo</label>
+                    <input
+                      type="file"
+                      id="newPhoto"
+                      class="form-control"
+                      (change)="onFileSelected($event)"
+                    />
+                  </div>
+                  <div class="text-center mt-4">
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                      [disabled]="!selectedFile"
+                    >
+                      Update Photo
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+          </div>
+          <div class="card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0">My account</h3>
+              </div>
+              <div class="col-4 text-right"></div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="heading-small text-muted mb-4">User information</h6>
+            <div class="pl-lg-4">
+              <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-firstname"
+                        >First name</label
+                      >
+                      <input
+                        type="text"
+                        id="firstname"
+                        class="form-control form-control-alternative"
+                        formControlName="firstname"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-lastname"
+                        >Last name</label
+                      >
+                      <input
+                        id="lastname"
+                        type="text"
+                        class="form-control  form-control-alternative"
+                        formControlName="lastname"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-email"
+                        >Email</label
+                      >
+                      <input
+                        id="email"
+                        type="email"
+                        class="form-control  form-control-alternative"
+                        formControlName="email"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-phonenumber"
+                        >Phone number</label
+                      >
+                      <input
+                        id="phoneNumber"
+                        type="text"
+                        class="form-control  form-control-alternative"
+                        formControlName="phoneNumber"
+                      />
+                    </div>
+                    <div class="button-container">
+                      <button class="btn btn-primary" type="submit">
+                        Edit Information
+                      </button>
+                      <div *ngIf="successMessage" class="text-success mt-2">
+                        {{ successMessage }}
+                      </div>
+                      <div *ngIf="errorMessage" class="text-danger mt-2">
+                        {{ errorMessage }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">Pssword information</h6>
+            <div class="pl-lg-4">
+              <form [formGroup]="passwordForm" (ngSubmit)="onChangePassword()">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-oldpassword"
+                        >Old password</label
+                      >
+                      <input
+                        id="input-oldpassword"
+                        class="form-control form-control-alternative"
+                        placeholder="Old password"
+                        type="password"
+                        formControlName="oldPassword"
+                      />
+                      <div
+                        *ngIf="
+                          passwordForm.controls['oldPassword'].invalid &&
+                          passwordForm.controls['oldPassword'].touched
+                        "
+                        class="text-danger"
+                      >
+                        Old password is required.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-newpassword"
+                        >New password</label
+                      >
+                      <input
+                        id="input-newpassword"
+                        class="form-control form-control-alternative"
+                        placeholder="New password"
+                        type="password"
+                        formControlName="newPassword"
+                      />
+                      <div
+                        *ngIf="
+                          passwordForm.controls['newPassword'].invalid &&
+                          passwordForm.controls['newPassword'].touched
+                        "
+                        class="text-danger"
+                      >
+                        New password is required and must be at least 6
+                        characters.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-confpassword"
+                        >Confirmation password</label
+                      >
+                      <input
+                        id="input-confpassword"
+                        class="form-control form-control-alternative"
+                        placeholder="Confirmation password"
+                        type="password"
+                        formControlName="confirmPassword"
+                      />
+
+                      <div
+                        *ngIf="
+                          passwordForm.hasError('passwordMismatch') &&
+                          passwordForm.controls['confirmPassword'].touched
+                        "
+                        class="text-danger"
+                      >
+                        Passwords do not match.
+                      </div>
+                    </div>
+                    <div class="button-container">
+                      <button
+                        class="btn btn-primary button-fcontainer"
+                        type="submit"
+                        [disabled]="passwordForm.invalid"
+                      >
+                        Edit Password
+                      </button>
+                      <div *ngIf="successMessage" class="text-success mt-2">
+                        {{ successMessage1 }}
+                      </div>
+                      <div *ngIf="errorMessage" class="text-danger mt-2">
+                        {{ errorMessage1 }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

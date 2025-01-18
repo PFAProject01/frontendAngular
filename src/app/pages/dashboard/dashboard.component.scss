@@ -1,0 +1,111 @@
+video, canvas {
+  width: 50%;
+  height: auto;
+  border: 2px solid #ddd;
+  margin-top: 10px;
+}
+canvas {
+  display: block;
+}
+
+/* Général */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fe;
+}
+
+.header {
+  position: relative;
+  padding: 2rem;
+  text-align: center;
+  color: #fff;
+}
+
+.header .mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: #6c757d;
+}
+
+.icon {
+  font-size: 2rem;
+}
+
+/* Boutons de caméra */
+button {
+  background-color: #5e72e4;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin: 0.5rem;
+  transition: background-color 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: #233dd2;
+}
+
+p {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Vidéo et canvas */
+video,
+canvas {
+  display: block;
+  margin: 1rem auto;
+  max-width: 100%;
+  border: 2px solid #e3e3e3;
+  border-radius: 0.25rem;
+}
+
+/* Cartes de statistiques */
+.card-stats {
+  text-align: center;
+}
+
+.card-stats .h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #32325d;
+}
+
+.card-stats .icon {
+  padding: 0.75rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    padding: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+    margin: 0.25rem 0;
+  }
+}

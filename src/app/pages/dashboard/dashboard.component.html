@@ -1,0 +1,62 @@
+<div
+  class="header pb-8 pt-5 pt-md-8"
+  style="background-image: url('https://cdn.pixabay.com/photo/2017/06/04/20/48/implement-2372179_1280.jpg'); background-size: cover; background-position: center;"
+>
+  <span class="mask bg-gradient-primary opacity-4"></span>
+
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="">
+          <div class="card card-stats mb-4 mb-xl-0 card-transparent">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h1 class="card-title">
+                    Scan Card Information
+                  </h1>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <!-- Change the icon to a scanner icon -->
+                    <i class="fas fa-scanner"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0 d-flex justify-content-between align-items-center"></div>
+
+        <!-- Use Flexbox to align buttons on the same line -->
+        <div class="d-flex">
+          <button class="btn btn-primary" (click)="startCamera()">Start Camera</button>
+          <button class="btn btn-success ml-2" (click)="captureImage()">Capture Image</button>
+          <button class="btn btn-danger ml-2" (click)="stopCamera()">Stop Camera</button>
+        </div>
+        
+        <p>{{ status }}</p>
+        <video #videoElement autoplay muted playsinline></video>
+        <canvas #canvasElement></canvas>
+        <div >
+          <h4>Extracted Information:</h4>
+          <ul>
+            <li *ngFor="let line of extractedLines">{{ line }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -50,13 +50,37 @@
         <p>{{ status }}</p>
         <video #videoElement autoplay muted playsinline></video>
         <canvas #canvasElement></canvas>
-        <div >
-          <h4>Extracted Information:</h4>
-          <ul>
-            <li *ngFor="let line of extractedLines">{{ line }}</li>
-          </ul>
+        
+        <div class="modal-body">
+          <p>Prénom: {{ extractedData?.prenom }}</p>
+          <p>Nom: {{ extractedData?.nom }}</p>
+          <p>Date de naissance: {{ extractedData?.date_naissance }}</p>
+          <p>Lieu de naissance: {{ extractedData?.lieu_naissance }}</p>
+          <p>Date de validité: {{ extractedData?.date_validite }}</p>
+          <p>Numéro de carte: {{ extractedData?.num_carte }}</p>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<ng-template #infoModal >
+  <div class="modal-header">
+    <h5 class="modal-title">Extracted Information</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Close click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Prénom: {{ extractedData?.prenom }}</p>
+    <p>Nom: {{ extractedData?.nom }}</p>
+    <p>Date de naissance: {{ extractedData?.date_naissance }}</p>
+    <p>Lieu de naissance: {{ extractedData?.lieu_naissance }}</p>
+    <p>Date de validité: {{ extractedData?.date_validite }}</p>
+    <p>Numéro de carte: {{ extractedData?.num_carte }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
+  </div>
+</ng-template>

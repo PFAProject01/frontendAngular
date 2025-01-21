@@ -1,25 +1,25 @@
-import { Component, OnInit } from "@angular/core";
-import {  ElementRef, ViewChild } from '@angular/core';
-import { NgbModal, NgbModalConfig } from "@ng-bootstrap/ng-bootstrap";
-import {Subject, Observable} from 'rxjs';
-import {WebcamImage, WebcamInitError, WebcamUtil} from 'ngx-webcam';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
+
 @Component({
-  selector: "app-dashboard",
-  templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.scss"],
-  providers: [NgbModalConfig, NgbModal],
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent  {
+export class DashboardComponent {
   @ViewChild('videoElement', { static: false }) videoElement!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvasElement', { static: false }) canvasElement!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('infoModal', { static: false }) infoModal!: NgbModalRef; // Ajout de l'@ViewChild du modal
+
   stream: MediaStream | null = null;
   status: string = 'Camera is inactive';
-  extractedLines: string[];  // Store the extracted lines here
+  extractedData: any = null;
+  modalRef: NgbModalRef | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private modalService: NgbModal, private cdr: ChangeDetectorRef) {}
 
-  // Démarrer la caméra
+  // Start the camera
   startCamera() {
     navigator.mediaDevices
       .getUserMedia({ video: true })
@@ -34,68 +34,76 @@ export class DashboardComponent  {
       });
   }
 
-  // Capturer une image
+  // Capture image
   captureImage() {
-    const video = this.videoElement.nativeElement;
-    const canvas = this.canvasElement.nativeElement;
+    try {
+      const video = this.videoElement.nativeElement;
+      const canvas = this.canvasElement.nativeElement;
 
-    // Définir la taille du canvas en fonction de la vidéo
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+      if (!this.stream) {
+        throw new Error('Camera is not active');
+      }
 
-    // Dessiner la vidéo sur le canvas
-    const context = canvas.getContext('2d');
-    if (context) {
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      // Set canvas size based on video
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
 
-      // Convertir le contenu du canvas en Blob (image)
-      canvas.toBlob((blob) => {
-        if (blob) {
-          this.sendImage(blob); // Envoyer l'image capturée
-        }
-      }, 'image/jpeg'); // Format de l'image
+      // Draw video frame on canvas
+      const context = canvas.getContext('2d');
+      if (context) {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // Convert canvas content to Blob (image)
+        canvas.toBlob((blob) => {
+          if (blob) {
+            this.sendImage(blob); // Send captured image
+          }
+        }, 'image/jpeg'); // Image format
+      }
+    } catch (error) {
+      console.error('Error during capture image:', error);
+      this.status = 'Error capturing image';
     }
   }
 
-  // Arrêter la caméra
+  // Stop the camera
   stopCamera() {
     if (this.stream) {
-      this.stream.getTracks().forEach((track) => track.stop());
+      this.stream.getTracks().forEach(track => track.stop());
       this.stream = null;
       this.status = 'Camera is stopped';
+      this.modalService.dismissAll(); // Dismiss all open modals
+      this.cdr.detectChanges();  // Force UI refresh
     }
   }
 
-  // Envoyer l'image capturée à une API
+  // Send captured image to API
   sendImage(imageBlob: Blob) {
     const formData = new FormData();
     formData.append('image', imageBlob, 'captured-image.jpg');
 
-    const apiUrl = 'http://localhost:8000/api/code/visionAPIig/';
+    const apiUrl = 'http://localhost:8000/api/code/extract_text_from_region/';
 
     this.http.post(apiUrl, formData).subscribe({
       next: (response: any) => {
         console.log('Image uploaded successfully:', response);
-        console.log('Texte extrait:', response.text);
-        console.log('Lignes extraites:', response.extracted_lines);
-
+        this.extractedData = response.extracted_data;
         this.status = 'Image uploaded successfully';
-
-        if (Array.isArray(response.extracted_lines)) {
-          this.extractedLines = response.extracted_lines;  // Mise à jour des lignes extraites
-        } else {
-          this.extractedLines = [];  // Si aucune ligne, on vide la variable
-        }
-        console.log(this.extractedLines);  // Vérifiez dans la console
+        
       },
       error: (error) => {
         console.error('Error uploading image:', error);
         this.status = 'Error uploading image';
-        this.extractedLines = [];
+        this.extractedData = null;
       },
     });
   }
 
-  
-  
+  // Open the modal
+  openModal() {
+    if (this.infoModal && !this.modalRef) {
+      this.modalRef = this.modalService.open(this.infoModal, { size: 'lg', centered: true });
+      this.cdr.detectChanges();  // Update UI
+    }
+  }
 }

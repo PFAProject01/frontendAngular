@@ -48,14 +48,16 @@
 
         <!-- Use Flexbox to align buttons on the same line -->
         <div class="d-flex justify-content-center">
-          <div class="d-flex flex-column align-items-center mx-3 me-5" style="margin-right: 100px;" >
+          <div
+            class="d-flex flex-column align-items-center mx-3 me-5"
+            style="margin-right: 100px"
+          >
             <img
               src="assets/img/cin2.jpg"
               alt="National Card Model"
               class="img-fluid mb-3 me-5"
               width="400"
               height="400"
-              
             />
             <button
               type="button"
@@ -80,8 +82,8 @@
               type="button"
               class="btn btn-primary"
               data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              (click)="openScannerModal()"
+              data-bs-target="#exampleModal1"
+              (click)="openScannerModal1()"
             >
               Scan Old Card
             </button>
@@ -89,31 +91,160 @@
         </div>
 
         <!-- Section pour afficher les informations extraites -->
-        <div #extractedDataSection class="extracted-data">
-          <h4 class="text-primary">Informations extraites:</h4>
-          <ul>
-            <li><strong>Prénom:</strong> {{ prenomfr }}</li>
-            <li><strong>Nom:</strong> {{ nomfr }}</li>
-            <li><strong>Prénom (Arabe):</strong> {{ prenomar }}</li>
-            <li><strong>Nom (Arabe):</strong> {{ nomfr }}</li>
-            <li>
-              <strong>Date de naissance:</strong>
-              {{ datenai }}
-            </li>
-            <li>
-              <strong>Lieu de naissance:</strong>
-              {{ lieunaisfr }}
-            </li>
-            <li>
-              <strong>Lieu de naissance (Arabe):</strong>
-              {{ lieunaisar }}
-            </li>
-            <li>
-              <strong>Date de validité:</strong>
-              {{ validite }}
-            </li>
-            <li><strong>Numéro de carte:</strong> {{ numero }}</li>
-          </ul>
+        
+        <div class="card bg-secondary shadow">
+          <div class="card-body">
+            <div class="card-header">
+              <h1 class="card-title text-center">Extracted Data</h1>
+            </div>
+            <div class="pl-lg-4">
+              <form [formGroup]="extractedDataForm">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-firstname"
+                        >Prénom</label
+                      >
+                      <input
+                        type="text"
+                        id="firstname"
+                        class="form-control form-control-alternative"
+                        formControlName="prenomfr"
+                        [value]="prenomfr"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-lastname"
+                        >Nom</label
+                      >
+                      <input
+                        type="text"
+                        id="lastname"
+                        class="form-control form-control-alternative"
+                        formControlName="nomfr"
+                        [value]="nomfr"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-firstname"
+                        >Prénom Arabe</label
+                      >
+                      <input
+                        type="text"
+                        id="firstname"
+                        class="form-control form-control-alternative"
+                        formControlName="prenomfr"
+                        [value]="prenomar"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-lastname"
+                        >Nom Arabe</label
+                      >
+                      <input
+                        type="text"
+                        id="lastname"
+                        class="form-control form-control-alternative"
+                        formControlName="nomfr"
+                        [value]="nomar"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="">
+                    <div class="form-group">
+                      <label
+                        class="form-control-label"
+                        for="input-date-naissance"
+                        >Date de naissance</label
+                      >
+                      <input
+                        type="text"
+                        id="datenai"
+                        class="form-control form-control-alternative"
+                        formControlName="datenai"
+                        [value]="datenai"
+                      />
+                    </div>
+                  </div>
+                  </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label
+                        class="form-control-label"
+                        for="input-date-naissance"
+                        >Lieu de naissance (Arabe)</label
+                      >
+                      <input
+                        type="text"
+                        id="lieunaisar"
+                        class="form-control form-control-alternative"
+                        formControlName="lieunaisar"
+                        [value]="lieunaisar"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label
+                        class="form-control-label"
+                        for="input-lieu-naissance"
+                        >Lieu de naissance</label
+                      >
+                      <input
+                        type="text"
+                        id="lieunaisfr"
+                        class="form-control form-control-alternative"
+                        formControlName="lieunaisfr"
+                        [value]="lieunaisfr"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-validite"
+                        >Date de validité</label
+                      >
+                      <input
+                        type="text"
+                        id="validite"
+                        class="form-control form-control-alternative"
+                        formControlName="validite"
+                        [value]="validite"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-numero"
+                        >Numéro de carte</label
+                      >
+                      <input
+                        type="text"
+                        id="numero"
+                        class="form-control form-control-alternative"
+                        formControlName="numero"
+                        [value]="numero"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -130,7 +261,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Scane Card</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Scane New Card</h1>
         <button
           type="button"
           class="btn-close"
@@ -159,6 +290,51 @@
           Close
         </button>
         <button type="button" class="btn btn-primary" (click)="scaner()">
+          Scaner
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  class="modal fade"
+  id="exampleModal1"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Scane Old Card</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="card bg-secondary">
+          <div class="card-body">
+            <div>
+              <video #videoElement1 autoplay muted playsinline></video>
+              <canvas #canvasElement1></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="closeModal()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="scaner1()">
           Scaner
         </button>
       </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef,ChangeDetectorRef  } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 
@@ -10,100 +10,145 @@ import { HttpClient } from '@angular/common/http';
 export class DashboardComponent {
   @ViewChild('videoElement', { static: false }) videoElement!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvasElement', { static: false }) canvasElement!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('infoModal', { static: false }) infoModal!: NgbModalRef; // Ajout de l'@ViewChild du modal
+  @ViewChild('extractedDataSection', { static: false }) extractedDataSection!: ElementRef;
+
 
   stream: MediaStream | null = null;
   status: string = 'Camera is inactive';
-  extractedData: any = null;
-  modalRef: NgbModalRef | null = null;
+  extractedData: any ;
+  prenomfr: string = '';
+  nomfr: string = '';
+  prenomar: string = '';
+  nomar: string = '';
+  cin: string = '';
+  datenai: string = '';
+  lieunaisfr: string = '';
+  lieunaisar: string = '';
+  validite: string = '';
+  numero: string = '';
 
-  constructor(private http: HttpClient, private modalService: NgbModal, private cdr: ChangeDetectorRef) {}
+  apiUrl: string = 'http://localhost:8000/api/code/extract_text_from_regionOLD/'; // URL de l'API
 
-  // Start the camera
+  constructor(private http: HttpClient,private cdr: ChangeDetectorRef) {}
+
+  /**
+   * Ouvre le modal et démarre la caméra
+   */
+  openScannerModal() {
+    this.startCamera();
+  }
+
+  /**
+   * Démarre la caméra
+   */
   startCamera() {
+    if (this.stream) {
+      this.status = 'Camera is already active.';
+      return;
+    }
+
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((stream) => {
         this.stream = stream;
         this.videoElement.nativeElement.srcObject = stream;
-        this.status = 'Camera is active';
+        this.status = 'Camera is active.';
       })
       .catch((error) => {
-        console.error('Error accessing the camera:', error);
-        this.status = 'Failed to access the camera. Please check permissions.';
+        console.error('Erreur lors de l’accès à la caméra:', error);
+        this.status = 'Erreur: Impossible d’accéder à la caméra. Vérifiez les permissions.';
       });
   }
 
-  // Capture image
+  /**
+   * Capture une image à partir du flux vidéo
+   */
   captureImage() {
+    if (!this.stream) {
+      this.status = 'Erreur: La caméra n’est pas active.';
+      return;
+    }
+
     try {
       const video = this.videoElement.nativeElement;
       const canvas = this.canvasElement.nativeElement;
 
-      if (!this.stream) {
-        throw new Error('Camera is not active');
-      }
-
-      // Set canvas size based on video
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
 
-      // Draw video frame on canvas
       const context = canvas.getContext('2d');
       if (context) {
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Convert canvas content to Blob (image)
         canvas.toBlob((blob) => {
           if (blob) {
-            this.sendImage(blob); // Send captured image
+            this.sendImage(blob); // Envoie l'image capturée à l'API
           }
-        }, 'image/jpeg'); // Image format
+        }, 'image/jpeg'); // Format de l'image
       }
     } catch (error) {
-      console.error('Error during capture image:', error);
-      this.status = 'Error capturing image';
+      console.error('Erreur lors de la capture d’image:', error);
+      this.status = 'Erreur lors de la capture d’image.';
     }
   }
 
-  // Stop the camera
-  stopCamera() {
-    if (this.stream) {
-      this.stream.getTracks().forEach(track => track.stop());
-      this.stream = null;
-      this.status = 'Camera is stopped';
-      this.modalService.dismissAll(); // Dismiss all open modals
-      this.cdr.detectChanges();  // Force UI refresh
-    }
-  }
 
-  // Send captured image to API
+
+
+  processImage(response: any) {
+    this.prenomfr = response.extracted_data.prenom || '';  // Assurez-vous que la donnée n'est pas null ou undefined
+    this.nomfr = response.extracted_data.nom || '';
+    this.prenomar = response.extracted_data.prenomAr || '';
+    this.nomar = response.extracted_data.nomAr || '';
+    this.datenai = response.extracted_data.date_naissance || '';
+    this.lieunaisfr = response.extracted_data.lieu_naissance || '';
+    this.lieunaisar = response.extracted_data.lieu_naissanceAr || '';
+    this.validite = response.extracted_data.date_validite || '';
+    this.numero = response.extracted_data.num_carte || '';
+  
+    this.cdr.markForCheck();  // Forcer la mise à jour du DOM
+  }
+  
+
+  /**
+   * Envoie l'image capturée à l'API pour traitement
+   */
   sendImage(imageBlob: Blob) {
     const formData = new FormData();
     formData.append('image', imageBlob, 'captured-image.jpg');
 
-    const apiUrl = 'http://localhost:8000/api/code/extract_text_from_region/';
-
-    this.http.post(apiUrl, formData).subscribe({
+    this.http.post(this.apiUrl, formData).subscribe({
       next: (response: any) => {
-        console.log('Image uploaded successfully:', response);
-        this.extractedData = response.extracted_data;
-        this.status = 'Image uploaded successfully';
-        
+        console.log('Image envoyée avec succès:', response);
+        this.processImage(response); // Appel de la mise à jour de la section extraites données
+        console.log('prenomfr:', this.prenomfr);
+        console.log('nomfr:', this.nomfr);
+
       },
       error: (error) => {
-        console.error('Error uploading image:', error);
-        this.status = 'Error uploading image';
+        console.error('Erreur lors de l’envoi de l’image:', error);
+        this.status = 'Erreur lors de l’analyse de l’image.';
         this.extractedData = null;
+      
       },
     });
   }
 
-  // Open the modal
-  openModal() {
-    if (this.infoModal && !this.modalRef) {
-      this.modalRef = this.modalService.open(this.infoModal, { size: 'lg', centered: true });
-      this.cdr.detectChanges();  // Update UI
+  /**
+   * Ferme le modal et arrête la caméra
+   */
+  closeModal() {
+    if (this.stream) {
+      this.stream.getTracks().forEach((track) => track.stop());
+      this.stream = null;
+      this.status = 'Camera is inactive.';
     }
+    
   }
+  scaner() {
+    this.captureImage(); // Capture l'image
+    this.cdr.detectChanges();
+
+  }
+
 }

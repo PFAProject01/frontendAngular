@@ -1,6 +1,10 @@
 <div
   class="header pb-8 pt-5 pt-md-8"
-  style="background-image: url('https://cdn.pixabay.com/photo/2017/06/04/20/48/implement-2372179_1280.jpg'); background-size: cover; background-position: center;"
+  style="
+    background-image: url('https://cdn.pixabay.com/photo/2017/06/04/20/48/implement-2372179_1280.jpg');
+    background-size: cover;
+    background-position: center;
+  "
 >
   <span class="mask bg-gradient-primary opacity-4"></span>
 
@@ -13,12 +17,12 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <h1 class="card-title">
-                    Scan Card Information
-                  </h1>
+                  <h1 class="card-title">Scan Card Information</h1>
                 </div>
                 <div class="col-auto">
-                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                  <div
+                    class="icon icon-shape bg-danger text-white rounded-circle shadow"
+                  >
                     <!-- Change the icon to a scanner icon -->
                     <i class="fas fa-scanner"></i>
                   </div>
@@ -38,49 +42,126 @@
   <div class="row">
     <div class="col">
       <div class="card shadow">
-        <div class="card-header border-0 d-flex justify-content-between align-items-center"></div>
+        <div
+          class="card-header border-0 d-flex justify-content-between align-items-center"
+        ></div>
 
         <!-- Use Flexbox to align buttons on the same line -->
-        <div class="d-flex">
-          <button class="btn btn-primary" (click)="startCamera()">Start Camera</button>
-          <button class="btn btn-success ml-2" (click)="captureImage()">Capture Image</button>
-          <button class="btn btn-danger ml-2" (click)="stopCamera()">Stop Camera</button>
+        <div class="d-flex justify-content-center">
+          <div class="d-flex flex-column align-items-center mx-3 me-5" style="margin-right: 100px;" >
+            <img
+              src="assets/img/cin2.jpg"
+              alt="National Card Model"
+              class="img-fluid mb-3 me-5"
+              width="400"
+              height="400"
+              
+            />
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              (click)="openScannerModal()"
+            >
+              Scan New Card
+            </button>
+          </div>
+
+          <div class="d-flex flex-column align-items-center mx-3 me-5">
+            <img
+              src="assets/img/cin4.jpg"
+              alt="National Card Model"
+              class="img-fluid mb-3"
+              width="400"
+              height="450"
+            />
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              (click)="openScannerModal()"
+            >
+              Scan Old Card
+            </button>
+          </div>
         </div>
-        
-        <p>{{ status }}</p>
-        <video #videoElement autoplay muted playsinline></video>
-        <canvas #canvasElement></canvas>
-        
-        <div class="modal-body">
-          <p>Prénom: {{ extractedData?.prenom }}</p>
-          <p>Nom: {{ extractedData?.nom }}</p>
-          <p>Date de naissance: {{ extractedData?.date_naissance }}</p>
-          <p>Lieu de naissance: {{ extractedData?.lieu_naissance }}</p>
-          <p>Date de validité: {{ extractedData?.date_validite }}</p>
-          <p>Numéro de carte: {{ extractedData?.num_carte }}</p>
+
+        <!-- Section pour afficher les informations extraites -->
+        <div #extractedDataSection class="extracted-data">
+          <h4 class="text-primary">Informations extraites:</h4>
+          <ul>
+            <li><strong>Prénom:</strong> {{ prenomfr }}</li>
+            <li><strong>Nom:</strong> {{ nomfr }}</li>
+            <li><strong>Prénom (Arabe):</strong> {{ prenomar }}</li>
+            <li><strong>Nom (Arabe):</strong> {{ nomfr }}</li>
+            <li>
+              <strong>Date de naissance:</strong>
+              {{ datenai }}
+            </li>
+            <li>
+              <strong>Lieu de naissance:</strong>
+              {{ lieunaisfr }}
+            </li>
+            <li>
+              <strong>Lieu de naissance (Arabe):</strong>
+              {{ lieunaisar }}
+            </li>
+            <li>
+              <strong>Date de validité:</strong>
+              {{ validite }}
+            </li>
+            <li><strong>Numéro de carte:</strong> {{ numero }}</li>
+          </ul>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal -->
-<ng-template #infoModal >
-  <div class="modal-header">
-    <h5 class="modal-title">Extracted Information</h5>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Close click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Scane Card</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          (click)="closeModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="card bg-secondary">
+          <div class="card-body">
+            <div>
+              <video #videoElement autoplay muted playsinline></video>
+              <canvas #canvasElement></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="closeModal()"
+        >
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="scaner()">
+          Scaner
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="modal-body">
-    <p>Prénom: {{ extractedData?.prenom }}</p>
-    <p>Nom: {{ extractedData?.nom }}</p>
-    <p>Date de naissance: {{ extractedData?.date_naissance }}</p>
-    <p>Lieu de naissance: {{ extractedData?.lieu_naissance }}</p>
-    <p>Date de validité: {{ extractedData?.date_validite }}</p>
-    <p>Numéro de carte: {{ extractedData?.num_carte }}</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
-  </div>
-</ng-template>
+</div>

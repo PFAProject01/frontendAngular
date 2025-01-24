@@ -43,9 +43,7 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-.card-title {
-  color: #6c757d;
-}
+
 
 .icon {
   font-size: 2rem;
@@ -109,3 +107,32 @@ canvas {
     margin: 0.25rem 0;
   }
 }
+
+
+
+
+.modal-dialog {
+  max-width: 80%; /* Augmente la largeur maximale du modal */
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  border-radius: 0.5rem; /* Augmente le rayon du bord des coins */
+}
+
+.modal-header,
+.modal-footer {
+  padding: 1rem;
+}
+
+.modal-body {
+  padding: 2rem; /* Augmente la taille de la zone de contenu du modal */
+}
+
+.video,
+.canvas {
+  width: 100%; /* S'assure que la vidéo et le canvas occupent toute la largeur du modal */
+  height: auto;
+}
+
+
